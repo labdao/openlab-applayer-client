@@ -2,8 +2,6 @@
 
 OpenLab application layer REST API client.
 
-> !! NOTE: under active development, please wait until the first release to use this package
-
 ### Compatibility
 
 The module should work in the following environments:
