@@ -15,6 +15,9 @@
 
 import { Configuration } from './configuration';
 import globalAxios, { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
+// URLSearchParams not necessarily used
+// @ts-ignore
+import { URL, URLSearchParams } from 'url';
 // Some imports not used depending on template conditions
 // @ts-ignore
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from './common';
@@ -166,10 +169,10 @@ export interface ValidationError {
 }
 
 /**
- * DefaultApi - axios parameter creator
+ * OpenLabApi - axios parameter creator
  * @export
  */
-export const DefaultApiAxiosParamCreator = function (configuration?: Configuration) {
+export const OpenLabApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
          * 
@@ -315,11 +318,11 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 };
 
 /**
- * DefaultApi - functional programming interface
+ * OpenLabApi - functional programming interface
  * @export
  */
-export const DefaultApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = DefaultApiAxiosParamCreator(configuration)
+export const OpenLabApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = OpenLabApiAxiosParamCreator(configuration)
     return {
         /**
          * 
@@ -370,11 +373,11 @@ export const DefaultApiFp = function(configuration?: Configuration) {
 };
 
 /**
- * DefaultApi - factory interface
+ * OpenLabApi - factory interface
  * @export
  */
-export const DefaultApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = DefaultApiFp(configuration)
+export const OpenLabApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = OpenLabApiFp(configuration)
     return {
         /**
          * 
@@ -421,22 +424,71 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
 };
 
 /**
- * DefaultApi - object-oriented interface
+ * OpenLabApi - interface
  * @export
- * @class DefaultApi
- * @extends {BaseAPI}
+ * @interface OpenLabApi
  */
-export class DefaultApi extends BaseAPI {
+export interface OpenLabApiInterface {
     /**
      * 
      * @summary Get app information, endpoints and examples
      * @param {string} appname 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DefaultApi
+     * @memberof OpenLabApiInterface
+     */
+    getAppByNameV1AppsAppnameGet(appname: string, options?: AxiosRequestConfig): AxiosPromise<App>;
+
+    /**
+     * 
+     * @summary Get job metadata and status
+     * @param {string} appname 
+     * @param {string} jobid 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OpenLabApiInterface
+     */
+    getJobStatusV1AppsAppnameStatusJobidGet(appname: string, jobid: string, options?: AxiosRequestConfig): AxiosPromise<Job>;
+
+    /**
+     * 
+     * @summary List apps available on this service
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OpenLabApiInterface
+     */
+    listAppsV1AppsGet(options?: AxiosRequestConfig): AxiosPromise<Array<App>>;
+
+    /**
+     * 
+     * @summary Submit a new job for an application, receive job metadata and status
+     * @param {string} appname 
+     * @param {JobRequest} [jobRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OpenLabApiInterface
+     */
+    submitJobV1AppsAppnameSubmitPost(appname: string, jobRequest?: JobRequest, options?: AxiosRequestConfig): AxiosPromise<Job>;
+
+}
+
+/**
+ * OpenLabApi - object-oriented interface
+ * @export
+ * @class OpenLabApi
+ * @extends {BaseAPI}
+ */
+export class OpenLabApi extends BaseAPI implements OpenLabApiInterface {
+    /**
+     * 
+     * @summary Get app information, endpoints and examples
+     * @param {string} appname 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OpenLabApi
      */
     public getAppByNameV1AppsAppnameGet(appname: string, options?: AxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).getAppByNameV1AppsAppnameGet(appname, options).then((request) => request(this.axios, this.basePath));
+        return OpenLabApiFp(this.configuration).getAppByNameV1AppsAppnameGet(appname, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -446,10 +498,10 @@ export class DefaultApi extends BaseAPI {
      * @param {string} jobid 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DefaultApi
+     * @memberof OpenLabApi
      */
     public getJobStatusV1AppsAppnameStatusJobidGet(appname: string, jobid: string, options?: AxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).getJobStatusV1AppsAppnameStatusJobidGet(appname, jobid, options).then((request) => request(this.axios, this.basePath));
+        return OpenLabApiFp(this.configuration).getJobStatusV1AppsAppnameStatusJobidGet(appname, jobid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -457,10 +509,10 @@ export class DefaultApi extends BaseAPI {
      * @summary List apps available on this service
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DefaultApi
+     * @memberof OpenLabApi
      */
     public listAppsV1AppsGet(options?: AxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).listAppsV1AppsGet(options).then((request) => request(this.axios, this.basePath));
+        return OpenLabApiFp(this.configuration).listAppsV1AppsGet(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -470,10 +522,10 @@ export class DefaultApi extends BaseAPI {
      * @param {JobRequest} [jobRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DefaultApi
+     * @memberof OpenLabApi
      */
     public submitJobV1AppsAppnameSubmitPost(appname: string, jobRequest?: JobRequest, options?: AxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).submitJobV1AppsAppnameSubmitPost(appname, jobRequest, options).then((request) => request(this.axios, this.basePath));
+        return OpenLabApiFp(this.configuration).submitJobV1AppsAppnameSubmitPost(appname, jobRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

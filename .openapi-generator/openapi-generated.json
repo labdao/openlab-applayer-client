@@ -1,0 +1,314 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "OpenLab App Service REST API",
+    "description": "This is a sample OpenLab application service REST API",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/v1/apps/{appname}": {
+      "get": {
+        "tags": [
+          "OpenLab"
+        ],
+        "summary": "Get app information, endpoints and examples",
+        "operationId": "get_app_by_name_v1_apps__appname__get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Appname",
+              "type": "string"
+            },
+            "name": "appname",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "App information, endpoints and examples",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/App"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/apps/{appname}/status/{jobid}": {
+      "get": {
+        "tags": [
+          "OpenLab"
+        ],
+        "summary": "Get job metadata and status",
+        "operationId": "get_job_status_v1_apps__appname__status__jobid__get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Appname",
+              "type": "string"
+            },
+            "name": "appname",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "schema": {
+              "title": "Jobid",
+              "type": "string"
+            },
+            "name": "jobid",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Job metadata and status",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Job"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/apps": {
+      "get": {
+        "tags": [
+          "OpenLab"
+        ],
+        "summary": "List apps available on this service",
+        "operationId": "list_apps_v1_apps_get",
+        "responses": {
+          "200": {
+            "description": "List of apps available on this service",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "Response 200 List Apps V1 Apps Get",
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/App"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/apps/{appname}/submit": {
+      "post": {
+        "tags": [
+          "OpenLab"
+        ],
+        "summary": "Submit a new job for an application, receive job metadata and status",
+        "operationId": "submit_job_v1_apps__appname__submit_post",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Appname",
+              "type": "string"
+            },
+            "name": "appname",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/JobRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Job metadata and status",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Job"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "App": {
+        "title": "App",
+        "type": "object",
+        "properties": {
+          "appname": {
+            "title": "Appname",
+            "type": "string"
+          },
+          "description": {
+            "title": "Description",
+            "type": "string"
+          },
+          "version": {
+            "title": "Version",
+            "type": "string"
+          },
+          "endpoints": {
+            "title": "Endpoints",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "description": "NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).\n\nDo not edit the class manually.\n\nApp - a model defined in OpenAPI\n\n    appname: The appname of this App [Optional].\n    description: The description of this App [Optional].\n    version: The version of this App [Optional].\n    endpoints: The endpoints of this App [Optional]."
+      },
+      "HTTPValidationError": {
+        "title": "HTTPValidationError",
+        "type": "object",
+        "properties": {
+          "detail": {
+            "title": "Detail",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            }
+          }
+        }
+      },
+      "Job": {
+        "title": "Job",
+        "required": [
+          "appname",
+          "jobid"
+        ],
+        "type": "object",
+        "properties": {
+          "appname": {
+            "title": "Appname",
+            "type": "string"
+          },
+          "inputs": {
+            "title": "Inputs",
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "parameters": {
+            "title": "Parameters",
+            "type": "object"
+          },
+          "jobid": {
+            "title": "Jobid",
+            "type": "string"
+          },
+          "created_at": {
+            "title": "Created At",
+            "type": "string",
+            "format": "date-time"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          },
+          "outputs": {
+            "title": "Outputs",
+            "type": "array",
+            "items": {}
+          }
+        },
+        "description": "NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).\n\nDo not edit the class manually.\n\nJob - a model defined in OpenAPI\n\n    appname: The appname of this Job [Optional].\n    inputs: The inputs of this Job [Optional].\n    parameters: The parameters of this Job [Optional]."
+      },
+      "JobRequest": {
+        "title": "JobRequest",
+        "type": "object",
+        "properties": {
+          "appname": {
+            "title": "Appname",
+            "type": "string"
+          },
+          "inputs": {
+            "title": "Inputs",
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "parameters": {
+            "title": "Parameters",
+            "type": "object"
+          }
+        },
+        "description": "NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).\n\nDo not edit the class manually.\n\nJobRequest - a model defined in OpenAPI\n\n    appname: The appname of this Job [Optional].\n    inputs: The inputs of this Job [Optional].\n    parameters: The parameters of this Job [Optional]."
+      },
+      "ValidationError": {
+        "title": "ValidationError",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "type": "object",
+        "properties": {
+          "loc": {
+            "title": "Location",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "msg": {
+            "title": "Message",
+            "type": "string"
+          },
+          "type": {
+            "title": "Error Type",
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
