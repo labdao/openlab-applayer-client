@@ -28,7 +28,7 @@ navigate to the folder of your consuming project and run one of the following co
 _published:_
 
 ```
-npm install @labdao/openlab-applayer-client@0.0.1 --save
+npm install @labdao/openlab-applayer-client --save
 ```
 
 _unPublished (not recommended):_
