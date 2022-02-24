@@ -1,0 +1,27 @@
+{
+  "name": "@labdao/openlab-applayer-client-ts",
+  "version": "0.0.1",
+  "description": "OpenAPI client for OpenLab application layer REST APIs",
+  "author": "Rik Smith-Unna <rik@fathomlabs.io> (https://github.com/blahah)",
+  "keywords": [
+    "axios",
+    "typescript",
+    "openapi-client",
+    "openapi-generator",
+    "@labdao/openlab-client-ts"
+  ],
+  "license": "Unlicense",
+  "main": "./dist/index.js",
+  "typings": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc --outDir dist/",
+    "prepare": "npm run build"
+  },
+  "dependencies": {
+    "axios": "^0.21.4"
+  },
+  "devDependencies": {
+    "@types/node": "^12.11.5",
+    "typescript": "^3.6.4"
+  }
+}
