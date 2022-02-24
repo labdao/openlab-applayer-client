@@ -37,3 +37,24 @@ _unPublished (not recommended):_
 
 ```
 npm install PATH_TO_GENERATED_PACKAGE --save
+
+### Usage
+
+```js
+const { OpenLabApi } = require('@labdao/openlab-applayer-client')
+
+const api = new OpenLabApi({ baseUrl: 'your_baseurl_here' })
+
+api.apps().then(r => console.log(r.data))
+
+api.app('alphafold').then(r => console.log(r.data)))
+
+api.jobStatus(
+  appname='alphafold',
+  jobid='73222306-cd7c-4e71-bd82-9e4f6123976c'
+).then(r => console.log(r.data))
+```
+
+### License
+
+MIT licensed
